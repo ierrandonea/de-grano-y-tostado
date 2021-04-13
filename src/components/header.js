@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { auth } from './../firebase/utils';
 
 import './styles.scss';
 
 const Header = props => {
+    const { currentUser } = props;
     return (
         <header>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -29,11 +31,34 @@ const Header = props => {
                         </li>
                     </ul>
                     <div className="dropdown-divider"></div>
-                    <div className="nav-item mr-0">
-                        <Link className="nav-link text-secondary" to="/login_register">Login / Registro</Link>
-                    </div>
+                    {
+                        currentUser && (
+                            <>
+                                <div className="nav-item mr-lg-0">
+                                    <Link className="nav-link text-secondary px-0 p-lg-3" to="/account">Mi cuenta</Link>
+                                </div>
+                                <span className="mx-n2 d-none d-lg-flex">/</span>
+                                <div className="nav-item mx-lg-0">
+                                    <Link className="nav-link text-secondary px-0 p-lg-3" onClick={() => auth.signOut()}>Cerrar sesión</Link>
+                                </div>
+                            </>
+                        )
+                    }
+                    {
+                        !currentUser && (
+                            <>
+                                <div className="nav-item mr-lg-0">
+                                    <Link className="nav-link text-secondary px-0 p-lg-3" to="/login">Login</Link>
+                                </div>
+                                <span className="mx-n2 d-none d-lg-flex">/</span>
+                                <div className="nav-item mx-lg-0">
+                                    <Link className="nav-link text-secondary px-0 p-lg-3" to="/registro">Registro</Link>
+                                </div>
+                            </>
+                        )
+                    }
                 </div>
-                <div className="border-bottom text-white">
+                <div className="border-bottom text-white mt-3 mt-lg-0">
                     <i class="fas fa-shopping-cart"></i>
                     <span className="ml-2">0</span>
                 </div>
@@ -41,6 +66,11 @@ const Header = props => {
         </header>
     );
 };
+
+Header.defaultProps = {
+    currentUser: null
+};
+
 
 export default Header;
 

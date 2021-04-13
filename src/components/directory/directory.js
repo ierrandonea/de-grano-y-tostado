@@ -18,7 +18,7 @@ const Directory = () => {
                         <img class="img-fluid" src={ShopCoffee} />
                     </picture>
                     <div className="d-flex justify-content-center align-items-center card-img-overlay directory-overlay">
-                        <a className="btn btn-outline-light">Café</a>                        
+                        <a className="btn btn-outline-light text-lg">Café</a>                        
                     </div>
                 </div>
                 <div className="col-12 col-md-6 card rounded-0 border-0">
