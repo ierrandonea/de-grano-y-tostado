@@ -5,10 +5,11 @@ import { auth, handleUserProfile } from './firebase/utils';
 // layouts
 import MainLayout from './layouts/mainLayout';
 
-// components
+// pages
 import Home from './pages/homepage/home';
 import Registration from './pages/registration/registration';
 import Login from './pages/login/login';
+import Recovery from './pages/recovery/recovery';
 
 // styles
 import "bootswatch/dist/lux/bootstrap.min.css";
@@ -75,6 +76,11 @@ class App extends Component {
                 <Login />
               </MainLayout>
             )} />
+          <Route exact path="/recovery" render={() => (
+            <MainLayout>
+              <Recovery />
+            </MainLayout>
+          )} />
         </Switch>
       </div>
     );
