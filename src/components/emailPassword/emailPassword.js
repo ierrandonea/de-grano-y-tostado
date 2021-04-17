@@ -6,16 +6,18 @@ import { auth } from './../../firebase/utils';
 import AutWrapper from './../authWrapper/authWrapper';
 import Input from './../forms/input';
 
-const initialState = {
-    email: '',
-    errors: []
-}
+
 
 const EmailPassword = () => {
     const [state, setState] = useState({
         email: '',
         errors: []
     })
+
+    const stateInitializer = {
+        email: '',
+        errors: []
+    }
 
     let history = useHistory();
 
@@ -56,6 +58,9 @@ const EmailPassword = () => {
                         errors: error
                     });
                 })
+            setState(
+                stateInitializer
+            )
         } catch (err) {
             console.log(err)
         }
@@ -63,7 +68,7 @@ const EmailPassword = () => {
     return (
         <AutWrapper {...configAuthWrapper}>
             <form onSubmit={e => handleSubmit(e)}>
-                <div class="row">
+                <div className="row">
                     <div className="col">
                         <Input
                             type="email"
@@ -76,7 +81,7 @@ const EmailPassword = () => {
                         />
                     </div>
                 </div>
-                <div class="row">
+                <div className="row">
                     <div className="col d-flex flex-column">
                         {
                             state.errors.length > 0 && state.errors.map((err, i) => {
@@ -87,9 +92,9 @@ const EmailPassword = () => {
                         }
                     </div>
                 </div>
-                <div class="row mt-3">
+                <div className="row mt-3">
                     <div className="col d-flex justify-content-center">
-                        <button type="submit" className={"btn btn-primary " + (handleValidation() == false ? "disabled" : "")}>Enviar</button>
+                        <button type="submit" className={"btn btn-primary " + (handleValidation() === false ? "disabled" : "")}>Enviar</button>
                     </div>
                 </div>
             </form>

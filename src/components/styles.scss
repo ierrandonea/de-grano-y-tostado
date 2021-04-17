@@ -1,3 +1,11 @@
 .dropdown:hover>.dropdown-menu {
     display: block;
   }
+
+  .session-close {
+    cursor: pointer;
+  }
+
+  .session-close:hover {
+    color: #fff !important;
+  }

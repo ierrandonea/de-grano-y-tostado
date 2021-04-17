@@ -36,11 +36,11 @@ const Header = props => {
                         currentUser && (
                             <>
                                 <div className="nav-item mr-lg-0">
-                                    <Link className="nav-link text-secondary px-0 p-lg-3" to="/account">Mi cuenta</Link>
+                                    <Link className="nav-link text-secondary px-0 p-lg-3" to="/dashboard">Mi cuenta</Link>
                                 </div>
                                 <span className="mx-n2 d-none d-lg-flex">/</span>
                                 <div className="nav-item mx-lg-0">
-                                    <Link className="nav-link text-secondary px-0 p-lg-3" onClick={() => auth.signOut()}>Cerrar sesión</Link>
+                                    <span className="nav-link text-secondary px-0 p-lg-3 session-close" onClick={() => auth.signOut()}>Cerrar sesión</span>
                                 </div>
                             </>
                         )
@@ -60,7 +60,7 @@ const Header = props => {
                     }
                 </div>
                 <div className="border-bottom text-white mt-3 mt-lg-0">
-                    <i class="fas fa-shopping-cart"></i>
+                    <i className="fas fa-shopping-cart"></i>
                     <span className="ml-2">0</span>
                 </div>
             </nav>

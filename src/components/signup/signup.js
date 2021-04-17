@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import AuthWrapper from './../authWrapper/authWrapper';
 import Input from '../forms/input';
 
 import { auth, handleUserProfile } from './../../firebase/utils';
-
-const initialState = {
-    displayName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    errors: []
-}
 
 const SignUp = props => {
     const [state, setState] = useState({
@@ -21,6 +14,14 @@ const SignUp = props => {
         confirmPassword: '',
         errors: []
     })
+
+    const stateInitializer = {
+        displayName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        errors: []
+    }
 
     const handleChange = e => {
         const { name, value } = e.target
@@ -51,13 +52,13 @@ const SignUp = props => {
             const { user } = await auth.createUserWithEmailAndPassword(email, password);
             await handleUserProfile(user, { displayName });
             setState({
-                initialState
-            })
+                stateInitializer
+            });
+            props.history.push("/");
         } catch (error) {
             console.log(error);
         }
     }
-
 
     const configAuthWrapper = {
         title: 'Registrarse'
@@ -66,7 +67,7 @@ const SignUp = props => {
     return (
         <AuthWrapper {...configAuthWrapper}>
             <form onSubmit={e => handleRegistSubmit(e)}>
-                <div class="row">
+                <div className="row">
                     <div className="col">
                         <Input
                             type="email"
@@ -79,7 +80,7 @@ const SignUp = props => {
                         />
                     </div>
                 </div>
-                <div class="row">
+                <div className="row">
                     <div className="col-12">
                         <Input
                             type="text"
@@ -102,7 +103,7 @@ const SignUp = props => {
                                 />
                             </div> */}
                 </div>
-                <div class="row">
+                <div className="row">
                     <div className="col-12 col-md-6">
                         <Input
                             type="password"
@@ -126,7 +127,7 @@ const SignUp = props => {
                         />
                     </div>
                 </div>
-                <div class="row">
+                <div className="row">
                     <div className="col d-flex flex-column">
                         {
                             state.errors.length > 0 && state.errors.map((err, i) => {
@@ -137,9 +138,9 @@ const SignUp = props => {
                         }
                     </div>
                 </div>
-                <div class="row mt-3">
+                <div className="row mt-3">
                     <div className="col d-flex justify-content-center">
-                        <button type="submit" className={"btn btn-primary " + (handleValidation() == false ? "disabled" : "")}>Registrarse</button>
+                        <button type="submit" className={"btn btn-primary " + (handleValidation() === false ? "disabled" : "")}>Registrarse</button>
                     </div>
                 </div>
             </form>
@@ -147,4 +148,4 @@ const SignUp = props => {
     );
 };
 
-export default SignUp;
+export default withRouter(SignUp);

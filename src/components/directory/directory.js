@@ -9,27 +9,27 @@ import ShopChocolate3 from './../../assets/shopChocolate-3.webp'
 const Directory = () => {
     return (
         <div className="container-fluid p-0">
-            <div class="row no-gutters">
+            <div className="row no-gutters">
                 <div className="col-12 col-md-6 card rounded-0 border-0">
                     <picture className="card-img">
-                        <source media="(max-width: 767px)" srcset={ShopCoffee2} />
-                        <source media="(max-width: 991px)" srcset={ShopCoffee3} />
-                        <source media="(min-width: 992px)" srcset={ShopCoffee} />
-                        <img class="img-fluid" src={ShopCoffee} />
+                        <source media="(max-width: 767px)" srcSet={ShopCoffee2} />
+                        <source media="(max-width: 991px)" srcSet={ShopCoffee3} />
+                        <source media="(min-width: 992px)" srcSet={ShopCoffee} />
+                        <img className="img-fluid" src={ShopCoffee} alt="" />
                     </picture>
                     <div className="d-flex justify-content-center align-items-center card-img-overlay directory-overlay">
-                        <a className="btn btn-outline-light text-lg">Café</a>                        
+                        <a className="btn btn-outline-light text-lg" href="/">Café</a>
                     </div>
                 </div>
                 <div className="col-12 col-md-6 card rounded-0 border-0">
                     <picture className="card-img">
-                        <source media="(max-width: 767px)" srcset={ShopChocolate2} />
-                        <source media="(max-width: 991px)" srcset={ShopChocolate3} />
-                        <source media="(min-width: 992px)" srcset={ShopChocolate} />
-                        <img class="img-fluid" src={ShopChocolate} />
+                        <source media="(max-width: 767px)" srcSet={ShopChocolate2} />
+                        <source media="(max-width: 991px)" srcSet={ShopChocolate3} />
+                        <source media="(min-width: 992px)" srcSet={ShopChocolate} />
+                        <img className="img-fluid" src={ShopChocolate} alt="" />
                     </picture>
                     <div className="d-flex justify-content-center align-items-center card-img-overlay directory-overlay">
-                        <a className="btn btn-outline-light">Chocolate</a>                        
+                        <a className="btn btn-outline-light" href="/">Chocolate</a>
                     </div>
                 </div>
             </div>
