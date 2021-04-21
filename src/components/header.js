@@ -1,12 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { auth } from './../firebase/utils';
 
 import './styles.scss';
 
+const mapState = ({ user }) => ({
+    currentUser: user.currentUser
+});
+
 const Header = props => {
-    const { currentUser } = props;
+    const { currentUser } = useSelector(mapState);
     return (
         <header>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -53,7 +57,7 @@ const Header = props => {
                                 </div>
                                 <span className="mx-n2 d-none d-lg-flex">/</span>
                                 <div className="nav-item mx-lg-0">
-                                    <Link className="nav-link text-secondary px-0 p-lg-3" to="/registro">Registro</Link>
+                                    <Link className="nav-link text-secondary px-0 p-lg-3" to="/register">Registro</Link>
                                 </div>
                             </>
                         )
@@ -72,9 +76,4 @@ Header.defaultProps = {
     currentUser: null
 };
 
-const mapStateToProps = ({ user }) => ({
-    currentUser: user.currentUser
-});
-
-export default connect(mapStateToProps, null)(Header);
-
+export default Header;
