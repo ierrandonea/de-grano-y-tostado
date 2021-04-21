@@ -9,7 +9,7 @@ const useAuth = props => {
     const { currentUser } = useSelector(mapState);
     useEffect(() => {
         if (!currentUser) {
-            props.history.push('/login')
+            props.history.push('/login');
         }
     }, [currentUser])
     return currentUser

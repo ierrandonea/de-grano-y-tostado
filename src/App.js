@@ -50,30 +50,32 @@ const App = props => {
             <Home />
           </MainLayout>
         )} />
-        <Route path="/registro"
-          render={() => (
+        <Route path="/register"
+          render={() => currentUser ? <Redirect to="/" /> : (
             <MainLayout>
               <Registration />
             </MainLayout>
           )} />
         <Route path="/login"
-          render={() => (
+          render={() => currentUser ? <Redirect to="/" /> : (
             <MainLayout>
               <Login />
             </MainLayout>
           )} />
-        <Route path="/recovery" render={() => (
-          <MainLayout>
-            <Recovery />
-          </MainLayout>
-        )} />
-        <Route path="/dashboard" render={() => (
-          <WithAuth>
+        <Route path="/recovery"
+          render={() => (
             <MainLayout>
-              <Dashboard />
+              <Recovery />
             </MainLayout>
-          </WithAuth>
-        )} />
+          )} />
+        <Route path="/dashboard"
+          render={() => (
+            <WithAuth>
+              <MainLayout>
+                <Dashboard />
+              </MainLayout>
+            </WithAuth>
+          )} />
       </Switch>
     </div>
   );
