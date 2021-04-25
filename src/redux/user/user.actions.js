@@ -38,3 +38,27 @@ export const signUpUser = ({ displayName, email, password, confirmPassword }) =>
         console.log(error);
     }
 };
+
+export const resetPassword = ({ email }) => async dispatch => {
+    const config = {
+        url: 'http://localhost:3000/login'
+    };
+    try {
+        await auth.sendPasswordResetEmail(email, config)
+            .then(() => {
+                dispatch({
+                    type: userTypes.RESET_PASSWORD_SUCCESS,
+                    payload: true
+                })
+            })
+            .catch(() => {
+                const error = ['Email no encontrado. Por favor intenta de nuevo.'];
+                dispatch({
+                    type: userTypes.RESET_PASSWORD_ERROR,
+                    payload: error
+                })
+            })
+    } catch (err) {
+        console.log(err)
+    }
+}

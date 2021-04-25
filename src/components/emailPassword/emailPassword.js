@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-
-import { auth } from './../../firebase/utils';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetPassword } from './../../redux/user/user.actions';
+import { useHistory, withRouter } from 'react-router-dom';
 
 import AutWrapper from './../authWrapper/authWrapper';
 import Input from './../forms/input';
 
+const mapState = ({ user }) => ({
+    resetPasswordSuccess: user.resetPasswordSuccess,
+    resetPasswordError: user.resetPasswordError
+})
 
-
-const EmailPassword = () => {
+const EmailPassword = props => {
+    const { resetPasswordSuccess, resetPasswordError } = useSelector(mapState);
+    const dispatch = useDispatch();
     const [state, setState] = useState({
         email: '',
         errors: []
@@ -18,8 +23,6 @@ const EmailPassword = () => {
         email: '',
         errors: []
     }
-
-    let history = useHistory();
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -39,32 +42,27 @@ const EmailPassword = () => {
         title: 'Recuperar Contraseña'
     }
 
-    const handleSubmit = async e => {
+    useEffect(() => {
+        if (resetPasswordSuccess) {
+            props.history.push("/")
+        }
+    }, [resetPasswordSuccess])
+
+    useEffect(() => {
+        if (Array.isArray(resetPasswordError) && resetPasswordError.length > 0) {
+            setState({
+                ...state,
+                errors: resetPasswordError
+            })
+        }
+    }, [resetPasswordError])
+
+    const handleSubmit = e => {
         e.preventDefault();
         const { email } = state;
-        const config = {
-            url: 'http://localhost:3000/login'
-        };
-        try {
-            await auth.sendPasswordResetEmail(email, config)
-                .then(() => {
-                    console.log("Password Reset");
-                    history.push("/login")
-                })
-                .catch(() => {
-                    const error = ['Email no encontrado. Por favor intenta de nuevo.'];
-                    setState({
-                        ...state,
-                        errors: error
-                    });
-                })
-            setState(
-                stateInitializer
-            )
-        } catch (err) {
-            console.log(err)
-        }
+        dispatch(resetPassword({ email }));
     }
+
     return (
         <AutWrapper {...configAuthWrapper}>
             <form onSubmit={e => handleSubmit(e)}>
@@ -102,4 +100,4 @@ const EmailPassword = () => {
     );
 };
 
-export default EmailPassword;
+export default withRouter(EmailPassword);
