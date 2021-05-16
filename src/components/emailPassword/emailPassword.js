@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetPassword } from './../../redux/user/user.actions';
-import { useHistory, withRouter } from 'react-router-dom';
+import { resetAllAuthForms, resetPassword } from './../../redux/user/user.actions';
 
 import AutWrapper from './../authWrapper/authWrapper';
 import Input from './../forms/input';
@@ -44,7 +44,11 @@ const EmailPassword = props => {
 
     useEffect(() => {
         if (resetPasswordSuccess) {
-            props.history.push("/")
+            setState({
+                stateInitializer
+            })
+            dispatch(resetAllAuthForms())
+            props.history.push('/login')
         }
     }, [resetPasswordSuccess])
 

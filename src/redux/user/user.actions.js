@@ -1,10 +1,14 @@
 import userTypes from './user.types';
-import { auth, handleUserProfile } from './../../firebase/utils';
+import { auth, handleUserProfile, GoogleProvider } from './../../firebase/utils';
 
 export const setCurrentUser = user => ({
     type: userTypes.SET_CURRENT_USER,
     payload: user
 });
+
+export const resetAllAuthForms = () => ({
+    type: userTypes.RESET_AUTH_FORMS
+})
 
 export const signInUser = ({ email, password }) => async dispatch => {
     try {
@@ -40,11 +44,8 @@ export const signUpUser = ({ displayName, email, password, confirmPassword }) =>
 };
 
 export const resetPassword = ({ email }) => async dispatch => {
-    const config = {
-        url: 'http://localhost:3000/login'
-    };
     try {
-        await auth.sendPasswordResetEmail(email, config)
+        await auth.sendPasswordResetEmail(email)
             .then(() => {
                 dispatch({
                     type: userTypes.RESET_PASSWORD_SUCCESS,
@@ -52,12 +53,27 @@ export const resetPassword = ({ email }) => async dispatch => {
                 })
             })
             .catch(() => {
-                const error = ['Email no encontrado. Por favor intenta de nuevo.'];
+                const err = ['Email no encontrado. Por favor intenta de nuevo.'];
                 dispatch({
                     type: userTypes.RESET_PASSWORD_ERROR,
-                    payload: error
+                    payload: err
                 })
             })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const signInWithGoogle = () => async dispatch => {
+    try {
+        await auth.signInWithPopup(GoogleProvider)
+            .then(() => {
+                dispatch({
+                    type: userTypes.SIGN_IN_SUCCESS,
+                    payload: true
+                });
+            })
+
     } catch (err) {
         console.log(err)
     }

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { signInUser } from './../../redux/user/user.actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInUser, signInWithGoogle, resetAllAuthForms } from './../../redux/user/user.actions';
 import AuthWrapper from './../authWrapper/authWrapper';
-import { signInWithGoogle } from './../../firebase/utils';
 
 import Button from '../forms/button';
 import Input from './../forms/input';
@@ -27,6 +26,7 @@ const SignIn = props => {
             setState({
                 stateInitializer
             });
+            dispatch(resetAllAuthForms())
             props.history.push("/");
         }
     }, [signInSuccess])
@@ -54,6 +54,10 @@ const SignIn = props => {
         e.preventDefault();
         const { email, password } = state;
         dispatch(signInUser({ email, password }));
+    }
+
+    const handleGoogleSignIn = () => {
+        dispatch(signInWithGoogle());
     }
 
     const configAuthWrapper = {
@@ -110,7 +114,7 @@ const SignIn = props => {
                 </div>
                 <div className="row socialMedia">
                     <div className="col">
-                        <Button extraClasses="w-100" onClick={signInWithGoogle}><i className="fab fa-google"></i> Google</Button>
+                        <Button extraClasses="w-100" onClick={handleGoogleSignIn}><i className="fab fa-google"></i> Google</Button>
                         {/* <Button extraClasses="w-100 mt-3" onClick={signInWithGithub}><i className="fab fa-github"></i>Github</Button> */}
                     </div>
                 </div>
