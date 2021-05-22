@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { auth } from './../firebase/utils';
+import { useSelector, useDispatch } from 'react-redux';
+import { signOutUserStart } from '../redux/user/user.actions';
 
 import './styles.scss';
 
@@ -10,7 +10,11 @@ const mapState = ({ user }) => ({
 });
 
 const Header = props => {
+    const dispatch = useDispatch();
     const { currentUser } = useSelector(mapState);
+    const signOut = () => {
+        dispatch(signOutUserStart());
+    };
     return (
         <header>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -44,7 +48,7 @@ const Header = props => {
                                 </div>
                                 <span className="mx-n2 d-none d-lg-flex">/</span>
                                 <div className="nav-item mx-lg-0">
-                                    <span className="nav-link text-secondary px-0 p-lg-3 session-close" onClick={() => auth.signOut()}>Cerrar sesión</span>
+                                    <span className="nav-link text-secondary px-0 p-lg-3 session-close" onClick={() => signOut()}>Cerrar sesión</span>
                                 </div>
                             </>
                         )
